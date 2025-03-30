@@ -1,0 +1,21 @@
+<% content_for :title, 'Buy cool new product' %>
+<section>
+  <div class="product">
+    <img src="https://i.imgur.com/EHyR2nP.png" alt="The cover of Stubborn Attachments"/>
+    <div class="description">
+      <h3>Stubborn Attachments</h3>
+      <h5>$20.00</h5>
+    </div>
+  </div>
+  <%= form_tag stripe_checkout_sessions_path(mode: "payment"), method: :post do %>
+    <button type="submit" id="checkout-button">Payment</button>
+  <% end %>
+
+  <%= form_tag stripe_checkout_sessions_path(mode: "subscription"), method: :post do %>
+    <button type="submit" id="checkout-button">Subscription</button>
+  <% end %>
+
+  <%= form_tag stripe_checkout_sessions_path(mode: "setup"), method: :post do %>
+    <button type="submit" id="checkout-button">Setup</button>
+  <% end %>
+</section>

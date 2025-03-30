@@ -14,5 +14,8 @@ Rails.application.routes.draw do
 
   namespace :stripe do
     resources :events, only: :create
+    resources :checkout_sessions, only: [:new, :create]
+    get "success" => "checkout_sessions#success"
+    get "cancel" => "checkout_sessions#cancel"
   end
 end
