@@ -19,14 +19,14 @@ default: &default
 
 development:
   <<: *default
-  database: stripe_test_development
+  database: stripe_tool_development
 
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".
 # Do not set this db to the same as development or production.
 test:
   <<: *default
-  database: stripe_test_test
+  database: stripe_tool_test
 
 # As with config/credentials.yml, you never want to store sensitive information,
 # like your database password, in your source code. If your source code is
@@ -51,18 +51,18 @@ test:
 production:
   primary: &primary_production
     <<: *default
-    database: stripe_test_production
-    username: stripe_test
-    password: <%= ENV["STRIPE_TEST_DATABASE_PASSWORD"] %>
+    database: stripe_tool_production
+    username: stripe_tool
+    password: <%= ENV["STRIPE_TOOL_DATABASE_PASSWORD"] %>
   cache:
     <<: *primary_production
-    database: stripe_test_production_cache
+    database: stripe_tool_production_cache
     migrations_paths: db/cache_migrate
   queue:
     <<: *primary_production
-    database: stripe_test_production_queue
+    database: stripe_tool_production_queue
     migrations_paths: db/queue_migrate
   cable:
     <<: *primary_production
-    database: stripe_test_production_cable
+    database: stripe_tool_production_cable
     migrations_paths: db/cable_migrate

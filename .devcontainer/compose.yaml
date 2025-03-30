@@ -1,4 +1,4 @@
-name: "stripe_test"
+name: "stripe_tool"
 
 services:
   rails-app:
