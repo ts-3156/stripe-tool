@@ -3,6 +3,6 @@ export class Banana {
   }
 
   say(): void {
-    console.log('Banana!')
+    console.log('Banana!');
   }
 }

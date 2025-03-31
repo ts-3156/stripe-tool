@@ -3,6 +3,6 @@ export class Apple {
   }
 
   say() {
-    console.log('Apple!')
+    console.log('Apple!');
   }
 }
