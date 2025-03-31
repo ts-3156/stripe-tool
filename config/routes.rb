@@ -18,4 +18,6 @@ Rails.application.routes.draw do
     get "success" => "checkout_sessions#success"
     get "cancel" => "checkout_sessions#cancel"
   end
+
+  mount MissionControl::Jobs::Engine, at: "/jobs"
 end

@@ -8,6 +8,10 @@ Rails.application.configure do
   })
   config.log_level = :info
 
+  config.active_job.queue_adapter = :solid_queue
+  config.solid_queue.connects_to = {database: {writing: :queue}}
+  config.solid_queue.logger = ActiveSupport::Logger.new(STDOUT)
+
   # Make code changes take effect immediately without server restart.
   config.enable_reloading = true
 

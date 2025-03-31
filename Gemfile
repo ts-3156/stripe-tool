@@ -65,3 +65,4 @@ group :test do
 end
 
 gem "stripe"
+gem "mission_control-jobs"

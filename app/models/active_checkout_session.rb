@@ -1,17 +1,15 @@
 class ActiveCheckoutSession < ApplicationRecord
   class << self
     def mark_as_expired(user_id)
-      where(user_id: user_id).
-          where("created_at > ?", Stripe::CheckoutHandler::EXPIRY_MINUTES.minutes.ago).
+      records = where(user_id: user_id).
+          where(created_at: Stripe::CheckoutHandler::EXPIRY_MINUTES.minutes.ago..).
           where(expired_at: nil).
           where(completed_at: nil).
           order(created_at: :desc).
-          limit(10).each do |record|
-        if Stripe::Checkout::Session.retrieve(record.target_id).status == "open"
-          Stripe::Checkout::Session.expire(record.target_id)
-          record.update!(expired_at: Time.zone.now)
-        end
-      end
+          limit(10).
+          select(:id)
+      jobs = records.map { |record| ExpireCheckoutSessionJob.new(record) }
+      ActiveJob.perform_all_later(jobs)
     end
 
     def mark_as_completed(target_id)
@@ -19,9 +17,7 @@ class ActiveCheckoutSession < ApplicationRecord
     end
 
     def cleanup
-      where("created_at > ?", Stripe::CheckoutHandler::EXPIRY_MINUTES.minutes.ago).
-          where("expired_at IS NOT NULL OR completed_at IS NOT NULL").
-          delete_all
+      where(created_at: ..Stripe::CheckoutHandler::EXPIRY_MINUTES.minutes.ago).delete_all
     end
   end
 end
