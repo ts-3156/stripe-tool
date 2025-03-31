@@ -375,7 +375,6 @@ DEPENDENCIES
   capybara
   debug
   dotenv-rails
-  importmap-rails
   jbuilder
   kamal
   mission_control-jobs
