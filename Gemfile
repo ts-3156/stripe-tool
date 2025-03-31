@@ -67,3 +67,4 @@ end
 gem "stripe"
 gem "mission_control-jobs"
 gem "jsbundling-rails"
+gem "cssbundling-rails"

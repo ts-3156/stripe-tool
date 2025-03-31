@@ -1,0 +1,8 @@
+@use 'apple';
+@use 'banana';
+
+html {
+  .apple {
+    color: apple.$apple;
+  }
+}
