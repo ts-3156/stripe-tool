@@ -1,3 +1,4 @@
+# TODO Rename
 module Stripe
   class CheckoutHandler
     # Onetime payment
@@ -11,6 +12,18 @@ module Stripe
     #     checkout.session.completed charge.failed
     #     charge.succeeded           payment_intent.payment_failed
     #     payment_intent.succeeded
+
+    # Subscription with free trial payment
+    #   Succeeded                    Failed
+    #     setup_intent.created         setup_intent.created
+    #     setup_intent.succeeded       setup_intent.setup_failed
+    #     checkout.session.completed
+
+    # Subscription trial period ends
+    #   Succeeded                    Failed
+    #     charge.succeeded             payment_intent.created
+    #     payment_intent.created       charge.failed
+    #     payment_intent.succeeded     payment_intent.payment_failed
 
     # Subscription renewal
     #   Succeeded                    Failed
