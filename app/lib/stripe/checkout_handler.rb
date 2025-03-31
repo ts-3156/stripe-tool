@@ -1,24 +1,46 @@
 module Stripe
   class CheckoutHandler
+    # Onetime payment
+    #   Succeeded                    Failed
+    #     payment_intent.succeeded     charge.failed
+    #     checkout.session.completed   payment_intent.payment_failed
+    #     charge.succeeded
+
+    # Subscription payment
+    #   Succeeded                    Failed
+    #     checkout.session.completed charge.failed
+    #     charge.succeeded           payment_intent.payment_failed
+    #     payment_intent.succeeded
+
+    # Subscription renewal
+    #   Succeeded                    Failed
+    #     TODO                         TODO
+
+    # 3D secure
+    #   Succeeded                      Failed
+    #   payment_intent.requires_action   payment_intent.requires_action
+    #   checkout.session.completed       payment_intent.payment_failed
+    #   payment_intent.succeeded
+    #   charge.succeeded
+
     PRICE_PAYMENT = ENV["PRICE_PAYMENT"]
     PRICE_SUBSCRIPTION = ENV["PRICE_SUBSCRIPTION"]
     PRICE_SETUP = ENV["PRICE_SETUP"]
     TAX_RATE = ENV["TAX_RATE"]
+    EXPIRY_MINUTES = 31
 
     class << self
-      def build_params(mode, trial_period)
-        email = "example#{(Time.zone.now + 9.hours).strftime('%H%M%S')}@example.com"
-        customer = Stripe::Customer.create({email: email, metadata: {test: true}})
-        expiry = 31.minutes.from_now.to_i
+      def build_params(mode, trial_period, user, customer)
+        expiry = EXPIRY_MINUTES.minutes.from_now.to_i
 
         if mode == "payment"
           {
               customer: customer.id,
-              client_reference_id: 1,
+              client_reference_id: user.id,
               payment_method_types: ["card"],
               mode: "payment",
               line_items: [{price: PRICE_PAYMENT, tax_rates: [TAX_RATE], quantity: 1}],
-              metadata: {test: true},
+              metadata: {user_id: user.id},
               expires_at: expiry
           }
         elsif mode == "subscription"
@@ -30,7 +52,7 @@ module Stripe
               line_items: [{price: PRICE_SUBSCRIPTION, quantity: 1}],
               subscription_data: {trial_period_days: trial_period, default_tax_rates: [TAX_RATE]}.compact,
               # discounts: '...',
-              metadata: {test: true},
+              metadata: {user_id: user.id},
               expires_at: expiry
           }
         elsif mode == "setup"
