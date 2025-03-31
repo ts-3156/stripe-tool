@@ -7,11 +7,15 @@
     "eslint": "^9.23.0",
     "globals": "^16.0.0",
     "sass": "^1.86.1",
-    "typescript-eslint": "^8.29.0",
-    "typescript": "^5.8.2"
+    "stylelint": "^16.17.0",
+    "stylelint-config-standard": "^37.0.0",
+    "stylelint-config-standard-scss": "^14.0.0",
+    "typescript": "^5.8.2",
+    "typescript-eslint": "^8.29.0"
   },
   "scripts": {
     "lint": "eslint app/javascript/*.*",
+    "lint:css": "stylelint app/assets/stylesheets/*.*",
     "build": "esbuild app/javascript/*.* --bundle --sourcemap --format=esm --outdir=app/assets/builds --public-path=/assets",
     "build:css": "sass ./app/assets/stylesheets/application.scss:./app/assets/builds/application.css --no-source-map --load-path=node_modules"
   }
