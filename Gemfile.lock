@@ -387,7 +387,6 @@ DEPENDENCIES
   solid_cable
   solid_cache
   solid_queue
-  stimulus-rails
   stripe
   thruster
   tzinfo-data
