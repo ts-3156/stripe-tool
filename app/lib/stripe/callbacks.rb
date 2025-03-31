@@ -54,9 +54,8 @@ module Stripe
         ::Stripe::Callbacks.noncritical_callbacks[type].each do |callback|
           begin
             callback.call(target, evt)
-          rescue Exception => e
-            ::Rails.logger.error e.message
-            ::Rails.logger.error e.backtrace.join("\n")
+          rescue => e
+            Rails.error.report(e)
           end
         end
       end

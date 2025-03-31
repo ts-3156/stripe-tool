@@ -7,7 +7,7 @@ class Stripe::EventsController < ApplicationController
     Stripe::Callbacks.run_callbacks(event, event.data.object)
     head :ok
   rescue JSON::ParserError, Stripe::SignatureVerificationError => e
-    logger.error e.inspect
+    Rails.error.report(e)
     head :bad_request
   end
 
