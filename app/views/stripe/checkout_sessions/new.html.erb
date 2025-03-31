@@ -15,6 +15,10 @@
     <button type="submit" id="checkout-button">Subscription</button>
   <% end %>
 
+  <%= form_tag stripe_checkout_sessions_path(mode: "subscription", trial_period: 3), method: :post do %>
+    <button type="submit" id="checkout-button">Subscription with free trial</button>
+  <% end %>
+
   <%= form_tag stripe_checkout_sessions_path(mode: "setup"), method: :post do %>
     <button type="submit" id="checkout-button">Setup</button>
   <% end %>
