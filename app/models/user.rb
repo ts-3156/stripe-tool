@@ -1,6 +1,11 @@
 class User < ApplicationRecord
   include Stripe::Callbacks
 
+  has_secure_password
+  has_many :sessions, dependent: :destroy
+
+  normalizes :email_address, with: ->(e) { e.strip.downcase }
+
   after_payment_intent_succeeded! do |payment_intent, event|
     customer = Stripe::Customer.retrieve(payment_intent.customer)
     StripeLog.create_callback_log!(payment_intent, event, customer.metadata[:user_id])
