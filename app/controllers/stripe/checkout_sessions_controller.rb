@@ -25,7 +25,7 @@ class Stripe::CheckoutSessionsController < ApplicationController
   private
 
   def create_user
-    User.create!(email_address: "example#{(Time.zone.now + 9.hours).strftime('%H%M%S')}@example.com")
+    User.create!(email_address: "example#{(Time.zone.now + 9.hours).strftime('%H%M%S')}@example.com", password: '1234')
   end
 
   def create_stripe_customer(user)

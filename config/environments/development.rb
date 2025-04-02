@@ -6,7 +6,7 @@ Rails.application.configure do
   config.logger = Logger.new("log/development.log", formatter: proc { |s, t, p, m|
     "[#{t.strftime('%Y-%m-%dT%H:%M:%S')}] #{s} -- #{m}\n"
   })
-  config.log_level = :info
+  config.log_level = :debug
 
   config.active_job.queue_adapter = :solid_queue
   config.solid_queue.connects_to = {database: {writing: :queue}}
