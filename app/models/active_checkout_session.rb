@@ -16,8 +16,16 @@ class ActiveCheckoutSession < ApplicationRecord
       where(target_id: target_id).update_all(completed_at: Time.zone.now)
     end
 
+    def still_active
+      where("created_at > ?", expiry_time)
+    end
+
     def cleanup
-      where(created_at: ..Stripe::CheckoutHandler::EXPIRY_MINUTES.minutes.ago).delete_all
+      where("created_at < ?", expiry_time).delete_all
+    end
+
+    def expiry_time
+      Stripe::CheckoutHandler::EXPIRY_MINUTES.minutes.ago
     end
   end
 end
