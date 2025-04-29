@@ -6,29 +6,29 @@ module Stripe
     #     payment_intent.succeeded     charge.failed
     #     checkout.session.completed   payment_intent.payment_failed
     #     charge.succeeded
-
+    #
     # Subscription payment
     #   Succeeded                    Failed
-    #     checkout.session.completed charge.failed
-    #     charge.succeeded           payment_intent.payment_failed
+    #     checkout.session.completed   charge.failed
+    #     charge.succeeded             payment_intent.payment_failed
     #     payment_intent.succeeded
-
+    #
     # Subscription with free trial payment
     #   Succeeded                    Failed
     #     setup_intent.created         setup_intent.created
     #     setup_intent.succeeded       setup_intent.setup_failed
     #     checkout.session.completed
-
+    #
     # Subscription trial period ends
     #   Succeeded                    Failed
-    #     charge.succeeded             payment_intent.created
-    #     payment_intent.created       charge.failed
+    #     charge.succeeded             charge.failed
     #     payment_intent.succeeded     payment_intent.payment_failed
-
+    #
     # Subscription renewal
     #   Succeeded                    Failed
-    #     TODO                         TODO
-
+    #     payment_intent.succeeded     charge.failed
+    #     charge.succeeded             payment_intent.payment_failed
+    #
     # 3D secure
     #   Succeeded                      Failed
     #   payment_intent.requires_action   payment_intent.requires_action
